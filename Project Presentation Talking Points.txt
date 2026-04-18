@@ -1,0 +1,57 @@
+Problem Description
+The goal of this project is to develop a machine learning model that predicts whether human intervention is required during robotic operations. This is framed as a binary classification problem: the model determines whether a robotic system can continue operating autonomously or requires manual assistance.
+In real-world industrial environments, robotic systems are widely used for automation in manufacturing, assembly, and logistics. Predicting when human intervention is needed is critical for reducing downtime, improving safety, and optimizing maintenance schedules. Early detection of possible failures allows engineers to intervene proactively, preventing costly disruptions and improving system reliability.
+
+Dataset, Features, and Output
+The dataset used in this project is the Robotic Operations Performance Dataset obtained from Kaggle. It contains approximately 500 observations with multiple features describing robot performance, environmental conditions, and sensor readings. The dataset contains both numerical and categorical variables.
+Input features include task type, sensor type, environmental status, and processed sensor readings. A key feature, sensor_data, originally contained mixed-format values (e.g., "85.3 (°C)", "92% (visual fit)"), which required cleaning and conversion to numerical values.
+The target variable is human_intervention_needed, a binary variable indicating whether human intervention is required (1) or not (0).
+Preprocessing steps included:
+- Cleaning and extracting numeric values from sensor_data
+- Encoding categorical variables using one-hot encoding
+- Handling missing values using appropriate strategies
+- Scaling numerical features using standardization
+- Creating engineered features such as efficiency_score and risk_flag
+
+Dataset Sample
+A sample of the dataset was displayed using the first few rows in order to understand its structure and feature types. The dataset contains both categorical and numerical variables, with sensor-related features playing a key role in predicting outcomes.
+One outstanding characteristic of the dataset is that the sensor_data column contained mixed text and numeric values, requiring preprocessing to extract usable numerical information. Additionally, the dataset showed class imbalance in the target variable, with one class occurring more frequently than the other. This influenced the intention to prioritize recall during model evaluation.
+Overall, the dataset is relatively small but structured, making it suitable for testing multiple machine learning models and preprocessing techniques.
+
+Type of Problem
+This project is a classification problem, specifically a binary classification task.
+The objective is to predict whether human intervention is needed (1) or not needed (0), which naturally fits a classification framework. Unlike regression, which predicts continuous values, this problem requires discrete class outputs.
+Classification models are appropriate because the outcome variable represents categorical decisions rather than numerical predictions. Therefore, algorithms such as Random Forest, Support Vector Machine, and Neural Networks were used.
+
+Tested Algorithms
+Several machine learning models were tested in this project to evaluate performance among various approaches.
+The models used include:
+- Support Vector Machine (SVM): A classification model that finds an optimal boundary separating classes.
+- Neural Network (MLPClassifier): A multi-layer perceptron capable of capturing complex nonlinear relationships.
+- Random Forest: An ensemble method using multiple decision trees to improve generalization.
+- XGBoost: A gradient boosting algorithm known for high performance and efficiency.
+Hyperparameter tuning was applied to Random Forest and XGBoost using GridSearchCV. Parameters such as the number of estimators, tree depth, and learning rate were optimized.
+Additionally, threshold tuning was applied to all probability-based models, reducing the decision threshold from 0.50 to 0.25 to prioritize recall. This modification improved the model’s ability to detect cases requiring intervention.
+
+Evaluation Metrics and Results
+Model performance was evaluated using the following metrics:
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+Recall was prioritized because correctly identifying cases requiring human intervention is important.
+Results were summarized in a comparison table and visualized using bar plots for recall and F1 score.
+The two best-performing models were:
+- Tuned Random Forest
+- Tuned XGBoost
+These models achieved the highest recall scores, making them the most suitable for predictive maintenance applications. The use of hyperparameter tuning and threshold adjustment significantly improved their performance when compared to the baseline models.
+
+Comparison with Existing Work
+The results of this project were compared with both research literature and open-source implementations. A key challenge encountered was that many of the selected sources used different datasets. In several cases, datasets were proprietary or not publicly available, making direct replication difficult.
+To address this limitation, the focus was placed on replicating the methodology rather than the exact results. This included preprocessing techniques, model selection, and evaluation strategies.
+Comparing existing work:
+- Our models achieved high recall through threshold tuning and class weighting
+- Literature models usually reported higher accuracy due to larger or time-series datasets
+- Open-source implementations provided more reproducible pipelines, but still differed in dataset structure
+One key improvement in our approach was using a lower threshold (0.25 instead of 0.50), which increased sensitivity to positive cases. However, a limitation is that our dataset is relatively small and not time-series-based, which may limit model complexity compared to deep learning approaches in the literature.
+Overall, the tuned ensemble models in this project performed competitively and demonstrated strong practical relevance for predictive maintenance tasks.
